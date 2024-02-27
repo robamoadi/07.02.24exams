@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="table.css">
+</head>
+
+<body>
+    <h2>TV OFFERS :</h2>
+    <table>
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Icon or Image</th>
+                <th scope="col">Name of the store</th>
+                <th scope="col">Address</th>
+                <th scope="col">City</th>
+                <th scope="col">Price</th>
+                <th scope="col">Link of the store</th>
+                <th scope="col">Rating of the place</th>
+                <th scope="col">Options</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="tr" id="tr1">
+                <td>1</td>
+                <td><img src="img/tv1.jpg"></td>
+                <td>xxx</td>
+                <td>xxx</td>
+                <td>Tel-Aviv</td>
+                <td class="price" id="obj">3200</td>
+                <td><a href="https://ksp.co.il/web/item/268961" target="_blank" rel="noopener noreferrer">link</a></td>
+                <td class="rate" id="obj">3/5</td>
+                <td><button onclick="delete_row('tr1')" type="button" class="red">delete</button>
+                    <button onclick="buyTV()" type="button" class="blue">Buy</button>
+                </td>
+            </tr>
+            <tr class="tr" id="tr2">
+                <td>2</td>
+                <td><img src="/img/tv2.jpg">
+                </td>
+                <td>xxx</td>
+                <td>xxx</td>
+                <td>Netanya</td>
+                <td class="price" id="obj">3000</td>
+                <td><a href="https://ksp.co.il/web/item/291198" target="_blank">link</a></td>
+                <td class="rate" id="obj">2/5</td>
+                <td><button onclick="delete_row('tr2')" type="button" class="red">delete</button>
+                    <button onclick="buyTV()" type="button" class="blue">Buy</button>
+                </td>
+            </tr>
+            <tr class="tr" id="tr3">
+                <td>3</td>
+                <td><img src="/img/tv4.webp" alt=""></td>
+                <td>xxx</td>
+                <td>xxx</td>
+                <td>Jerusalem</td>
+                <td class="price" id="obj">3340</td>
+                <td><a href="https://ksp.co.il/web/item/283721" target="_blank" rel="noopener noreferrer">link</a></td>
+                <td class="rate" id="obj">1/5</td>
+                <td><button onclick="delete_row('tr3')" type="button" class="red">delete</button>
+                    <button onclick="buyTV()" type="button" class="blue">Buy</button>
+                </td>
+            </tr>
+            <tr class="tr" id="tr4">
+                <td>4</td>
+                <td><img src="/img/tv3.jpg" alt=""></td>
+                <td>xxx</td>
+                <td>xxx</td>
+                <td>Haifa</td>
+                <td class="price" id="obj">3100</td>
+                <td><a href="https://ksp.co.il/web/item/268971" target="_blank" rel="noopener noreferrer">link</a></td>
+                <td class="rate" id="obj">5/5</td>
+                <td><button onclick="delete_row('tr4')" type="button" class="red">delete</button>
+                    <button onclick="buyTV()" type="button" class="blue">Buy</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <p id="result"></p>
+    <button id="best" onclick="best_option()">Best Option</button>&nbsp; &nbsp;<span id="hero"></spanid></span>
+    <script>
+        let row = document.querySelectorAll(".tr")
+        for (let i = 0; i < row.length; i++) {
+            let cell_content = row[i].querySelector(".rate").textContent
+            let num = parseInt(cell_content)
+            if (num < 2) {
+                row[i].style.backgroundColor = "rgb( 191, 176, 212)"
+            }
+            else if (num >= 4) {
+                row[i].style.backgroundColor = "rgb(87, 178, 158)"
+            }
+        }
+
+        let sum = 0
+        let avg = 0
+        let price = document.getElementsByClassName("price")
+        function avg_price() {
+            for (let i = 0; i < price.length; i++) {
+                let y = parseInt(price[i].innerHTML)
+                sum = sum + y
+                avg = sum / price.length
+            }
+        }
+        avg_price()
+        document.getElementById("result").innerHTML = (`Average Price : ${avg}`)
+
+        function delete_row(remRow) {
+            document.getElementById(remRow).remove()
+        }
+
+        function buyTV() {
+
+            my_window = window.open(`http://127.0.0.1:5500/buy.op.html`, "_blank")
+        }
+
+
+        const objects = []
+        let id = 1
+        for (let i = 0; i < row.length; i++) {
+
+            let cell_content = row[i].querySelector(".rate").textContent
+            let num = parseInt(cell_content)
+            let price = row[i].querySelector(".price").textContent
+            objects.push({ id: id++, price: price, rating: num })
+
+        }
+        console.log(objects);
+
+        function best_option() {
+            let bestOpId = null
+            let lowestPrice = Infinity
+
+            for (let i = 0; i < objects.length; i++) {
+                console.log(objects);
+                const obj = objects[i]
+                console.log(obj);
+                if (obj.rating == 4 || obj.rating == 5 && obj.price < lowestPrice) {
+                    bestOpId = obj.id
+                    lowestPrice = obj.price
+                    document.getElementById("hero").innerHTML = `The Best Option Is Row : ${bestOpId}`
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>
