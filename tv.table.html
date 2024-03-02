@@ -27,7 +27,7 @@
         <tbody>
             <tr class="tr" id="tr1">
                 <td>1</td>
-                <td><img src="img/tv1.jpg"></td>
+                <td><img src="/img/tv1.jpg"></td>
                 <td>xxx</td>
                 <td>xxx</td>
                 <td>Tel-Aviv</td>
@@ -114,7 +114,7 @@
 
         function buyTV() {
 
-            my_window = window.open(`http://127.0.0.1:5500/buy.op.html`, "_blank")
+            my_window = window.open(`/buy.op.html`, "_blank")
         }
 
 
@@ -135,7 +135,7 @@
             let lowestPrice = Infinity
 
             for (let i = 0; i < objects.length; i++) {
-                console.log(objects);
+                //console.log(objects);
                 const obj = objects[i]
                 console.log(obj);
                 if (obj.rating == 4 || obj.rating == 5 && obj.price < lowestPrice) {
